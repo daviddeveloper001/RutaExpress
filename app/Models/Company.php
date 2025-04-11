@@ -14,6 +14,9 @@ class Company extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $fillable = ['nit', 'city_id', 'business_type'];
     protected $casts = ['business_type' => BusinessTypeEnum::class];
     public function users() : HasMany

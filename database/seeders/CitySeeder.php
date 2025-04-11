@@ -12,22 +12,30 @@ class CitySeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
-    {
-
-        $Cali = City::updateOrCreate([
-            'name' => 'Cali',
-            'department_id' => Department::where('name', 'Valle del Cauca')->first()->id
-        ]);
-        
-        $Popayan = City::updateOrCreate([
-            'name' => 'Popayán',
-            'department_id' => Department::where('name', 'Cauca')->first()->id
-        ]);
-
-        $Pasto = City::updateOrCreate([
-            'name' => 'Pasto',
-            'department_id' => Department::where('name', 'Nariño')->first()->id
-        ]);
+    public function run() {
+        $cities = [
+            'Valle del Cauca' => ['Cali', 'Palmira', 'Buga'],
+            'Cauca' => ['Popayán', 'Santander de Quilichao'],
+            'Nariño' => ['Pasto', 'Ipiales', 'Tumaco']
+        ];
+    
+        foreach ($cities as $departmentName => $cityNames) {
+            $department = Department::where('name', $departmentName)->first();
+    
+            if (!$department) {
+                $this->command->error("Departamento '$departmentName' no encontrado.");
+                continue;
+            }
+    
+            foreach ($cityNames as $cityName) {
+                City::firstOrCreate(
+                    [
+                        'name' => $cityName,
+                        'department_id' => $department->id // Usar UUID correcto
+                    ],
+                    ['id' => \Illuminate\Support\Str::uuid()]
+                );
+            }
+        }
     }
 }

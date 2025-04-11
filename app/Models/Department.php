@@ -12,5 +12,8 @@ class Department extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public $incrementing = false; // Necesario para UUIDs
+    protected $keyType = 'string'; // Necesario para UUIDs
+
     protected $fillable = ['name'];
 }

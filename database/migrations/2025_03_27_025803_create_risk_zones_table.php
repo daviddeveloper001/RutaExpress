@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('risk_zones', function (Blueprint $table) {
             $table->uuid('id')->primary();  
-            $table->geometry('coordinates');  
+            $table->geometry('coordinates', 'GEOMETRY', 4326);
             $table->string('risk_type');  
             $table->softDeletes();
             $table->timestamps();

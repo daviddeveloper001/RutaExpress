@@ -3,20 +3,28 @@
 namespace Database\Seeders;
 
 use App\Models\Department;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DepartmentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run()
     {
-        $departments = ['Valle del Cauca', 'Cauca', 'Nariño'];
+        $departments = [
+            'Valle del Cauca',
+            'Cauca',
+            'Nariño'
+        ];
 
-        foreach ($departments as $department) {
-            Department::updateOrCreate(['name' => $department]);
+        foreach ($departments as $name) {
+            Department::firstOrCreate(
+                ['name' => $name],
+                ['id' => (string) Str::uuid()]
+            );
         }
     }
 }

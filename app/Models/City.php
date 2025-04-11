@@ -13,6 +13,9 @@ class City extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public $incrementing = false; // Necesario para UUIDs
+    protected $keyType = 'string'; // Necesario para UUIDs
+
     protected $fillable = ['name', 'department_id'];
     public function department(): BelongsTo
     {
