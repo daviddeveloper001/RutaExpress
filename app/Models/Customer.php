@@ -13,7 +13,10 @@ class Customer extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['company_id', 'frequent_location'];
+    public $incrementing = false; // Necesario para UUIDs
+    protected $keyType = 'string'; // Necesario para UUIDs
+
+    protected $fillable = ['company_id', 'name', 'frequent_location'];
     public function orders() : HasMany
     {
         return $this->hasMany(Order::class);

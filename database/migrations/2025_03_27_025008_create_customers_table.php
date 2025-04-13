@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('customers', function (Blueprint $table) {
-            $table->uuid('id')->primary();  
+            $table->uuid('id')->primary(); 
+            $table->string('name')->unique(); 
             $table->foreignUuid('company_id')->constrained('companies');  
             $table->string('frequent_location');  
             $table->softDeletes();

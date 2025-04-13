@@ -11,27 +11,23 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class CompanySeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run()
     {
-        // Obtener una ciudad existente para asignarla a la compañía
-        $city = City::where('name', 'Cali')->first();
+        $city = City::where('name', 'Cali')->firstOrFail();
 
-        if (!$city) {
-            $this->command->error("Ciudad 'Cali' no encontrada. Asegúrate de ejecutar el seeder de ciudades primero.");
-            return;
-        }
+        // Generar UUID fijo para la compañía (evita cambios)
+        $companyUuid = Str::uuid();
 
-        // Crear la compañía
         Company::firstOrCreate(
             ['nit' => '123456789-0'],
             [
-                'id' => Str::uuid(),
+                'id' => $companyUuid, // UUID fijo si se crea por primera vez
                 'city_id' => $city->id,
-                'business_type' => BusinessTypeEnum::FOOD, // Asegúrate de que este valor exista en tu enum
+                'business_type' => BusinessTypeEnum::FOOD
             ]
         );
+
+        // Asignar el mismo UUID a UserSeeder si es necesario
+        config(['ruta_express.company_uuid' => $companyUuid]);
     }
 }

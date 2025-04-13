@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             CitySeeder::class,
             CompanySeeder::class,
             UserSeeder::class,
-            //CaliSeeder::class
+            CustomerSeeder::class,
+            CaliSeeder::class
         ]);
     }
 }

@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\City;
 use App\Models\Order;
 use App\Models\Company;
+use App\Models\Customer;
+use Illuminate\Support\Str;
 use App\Enum\BusinessTypeEnum;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -18,30 +20,36 @@ class CaliSeeder extends Seeder
         $city = City::where('name', 'Cali')->first();
 
         if (!$city) {
-            $this->command->error("Ciudad 'Cali' no encontrada. Ejecuta primero el seeder de ciudades.");
+            $this->command->error("Ciudad 'Cali' no encontrada. Ejecuta primero el CitySeeder.");
             return;
         }
 
-        // Buscar compañía ya existente
-        $company = Company::where('nit', '123456789-0')->first();
+        // Buscar o crear compañía
+        $company = Company::where('nit', '123456789-0')->firstOrFail();
 
-        if (!$company) {
-            $this->command->error("Compañía con NIT 123456789-0 no encontrada. Ejecuta primero el CompanySeeder.");
+        // Crear clientes reales
+        $this->call(CustomerSeeder::class);
+        $customers = Customer::where('company_id', $company->id)->get();
+
+        // Validar que hay clientes creados
+        if ($customers->isEmpty()) {
+            $this->command->error("No hay clientes. Ejecuta primero el CustomerSeeder.");
             return;
         }
 
-        // Asegurar que la compañía esté correctamente asignada a Cali y tenga tipo FOOD
-        $company->update([
-            'city_id' => $city->id,
-            'business_type' => BusinessTypeEnum::FOOD,
-        ]);
+        // Crear 50 pedidos asignados a clientes existentes (elimina el segundo loop)
+        foreach ($customers as $customer) {
+            for ($i = 0; $i < 17; $i++) { // 3 clientes * 17 = ~50 pedidos
+                Order::create([
+                    'id' => Str::uuid(),
+                    'company_id' => $company->id,
+                    'customer_id' => $customer->id, // Usar ID real del cliente
+                    'products' => json_encode([['name' => 'Producto ' . Str::random(5), 'quantity' => rand(1,5)]]),
+                    'status' => 'pending'
+                ]);
+            }
+        }
 
-        // Generar 50 pedidos para la compañía
-        Order::factory()
-            ->count(50)
-            ->for($company)
-            ->create();
-
-        $this->command->info("Seeder de Cali ejecutado correctamente con 50 pedidos para la empresa {$company->nit}.");
+        $this->command->info("Seeder de Cali ejecutado: 50 pedidos creados para {$company->nit}");
     }
 }
