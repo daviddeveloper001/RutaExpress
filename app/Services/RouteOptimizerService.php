@@ -2,10 +2,14 @@
 
 namespace App\Services;
 
+
+
+use GuzzleHttp\Client;
 use App\Models\Company;
 use Illuminate\Support\Collection;
 
-class RouteOptimizer
+
+class RouteOptimizerService
 {
     /**
      * Create a new class instance.
@@ -47,5 +51,14 @@ class RouteOptimizer
         }
 
         return $safeRoute;
+    }
+
+    public function calculateRoute() {
+        $client = new Client(['key' => env('GOOGLE_MAPS_API_KEY')]);
+        $response = $client->directions()->get([
+            'origin' => 'Cali, CO',
+            'destination' => 'Popayán, CO',
+        ]);
+        return $response;
     }
 }

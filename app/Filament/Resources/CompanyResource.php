@@ -2,16 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CompanyResource\Pages;
-use App\Filament\Resources\CompanyResource\RelationManagers;
-use App\Models\Company;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Company;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\CompanyResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\CompanyResource\RelationManagers;
 
 class CompanyResource extends Resource
 {
@@ -23,14 +25,14 @@ class CompanyResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nit')
+                TextInput::make('nit')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('city_id')
-                ->relationship('city', 'name')
-                ->searchable()
-                ->preload(),
-                Forms\Components\TextInput::make('business_type')
+                Select::make('city_id')
+                    ->relationship('city', 'name')
+                    ->searchable()
+                    ->preload(),
+                TextInput::make('business_type')
                     ->required()
                     ->maxLength(255),
             ]);

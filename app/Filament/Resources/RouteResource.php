@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\RouteResource\Pages;
-use App\Filament\Resources\RouteResource\RelationManagers;
-use App\Models\Route;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Route;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Livewire\MapWidget;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\RouteResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\RouteResource\RelationManagers;
 
 class RouteResource extends Resource
 {
@@ -83,6 +84,12 @@ class RouteResource extends Resource
             'index' => Pages\ListRoutes::route('/'),
             'create' => Pages\CreateRoute::route('/create'),
             'edit' => Pages\EditRoute::route('/{record}/edit'),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array {
+        return [
+            MapWidget::class,
         ];
     }
 }

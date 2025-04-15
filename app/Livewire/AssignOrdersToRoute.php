@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\Order;
+use App\Models\Route;
 use Livewire\Component;
 
 class AssignOrdersToRoute extends Component
