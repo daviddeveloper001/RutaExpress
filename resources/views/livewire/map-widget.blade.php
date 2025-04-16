@@ -1,18 +1,20 @@
-<div wire:ignore 
-     x-data="{
-        init() {
-            const map = new google.maps.Map(this.$refs.map, {
-                center: { lat: {{ $config['center']['lat'] }}, lng: {{ $config['center']['lng'] }} },
-                zoom: {{ $config['zoom'] }}
+<!-- resources/views/livewire/map-widget.blade.php -->
+{{-- <div wire:ignore>
+    <div id="map" class="h-96 w-full"></div>
+    <script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 3.4516, lng: -76.5320 }, // Coordenadas de Cali
+                zoom: 12
             });
-            @foreach($config['markers'] as $marker)
-                new google.maps.Marker({
-                    position: { lat: {{ $marker['position']['lat'] }}, lng: {{ $marker['position']['lng'] }} },
-                    map: map,
-                    title: '{{ $marker['title'] }}'
-                });
-            @endforeach
         }
-     }">
-    <div x-ref="map" class="w-full h-96"></div>
+    </script>
+    
+    <script async defer 
+        src="https://maps.googleapis.com/maps/api/js?key={{ $apiKey }}&callback=initMap">
+    </script>
+</div> --}}
+
+<div>
+    <h1 style="color: red; text-align: center;">¡MapWidget cargado exitosamente!</h1>
 </div>

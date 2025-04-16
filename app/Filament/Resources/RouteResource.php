@@ -20,6 +20,7 @@ class RouteResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+
     public static function form(Form $form): Form
     {
         return $form
@@ -87,7 +88,8 @@ class RouteResource extends Resource
         ];
     }
 
-    protected function getHeaderWidgets(): array {
+    protected function getHeaderWidgets(): array
+    {
         return [
             MapWidget::class,
         ];

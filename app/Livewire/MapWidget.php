@@ -4,21 +4,16 @@ namespace App\Livewire;
 
 use Livewire\Component;
 
-class MapWidget extends Component
-{
-
-    protected $listeners = ['refreshMap' => '$refresh'];
-    public function render() {
-        $config = [
-            'center' => 'Cali, Colombia',
-            'zoom' => 12,
-            'markers' => [
-                [
-                    'position' => ['lat' => 3.4516, 'lng' => -76.5320],
-                    'title' => 'RutaExpress HQ',
-                ],
-            ],
-        ];
-        return view('livewire.map-widget', compact('config'));
+class MapWidget extends Component {
+    public $apiKey;
+    
+    public function mount() {
+        $this->apiKey = config('services.google.maps_key');
     }
+
+    public function render() {
+        //dd('MapWidget render method called');
+        return view('livewire.map-widget');
+    }
+    
 }

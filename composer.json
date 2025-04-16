@@ -8,7 +8,7 @@
     "require": {
         "php": "^8.2",
         "filament/filament": "^3.3",
-        "google/apiclient": "2.15",
+        "google/apiclient": "2.18.1",
         "google/cloud": "^0.283.0",
         "google/maps-routeoptimization": "*",
         "laravel/framework": "^12.0",
