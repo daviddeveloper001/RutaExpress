@@ -12,7 +12,7 @@ class MapWidget extends Component {
     }
 
     public function render() {
-        //dd('MapWidget render method called');
+        dd('MapWidget render method called');
         return view('livewire.map-widget');
     }
     

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\RouteResource\Pages;
 use App\Filament\Resources\RouteResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\RouteResource\Widgets\MapWidgetView;
 
 class ListRoutes extends ListRecords
 {
@@ -17,5 +18,10 @@ class ListRoutes extends ListRecords
         ];
     }
 
-    
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            MapWidgetView::class,
+        ];
+    }
 }
